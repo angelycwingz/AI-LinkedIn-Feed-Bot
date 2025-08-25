@@ -1,6 +1,5 @@
 import requests
 import json
-from content_generator import generate_post
 from config.settings import LINKEDIN_ACCESS_TOKEN,LINKEDIN_USER_ID
 
 def post_to_linkedin(content: str):
@@ -33,9 +32,3 @@ def post_to_linkedin(content: str):
         print("✅ Posted successfully on LinkedIn!", response.json().get("id"))
     else:
         print(f"❌ Failed: {response.status_code} {response.text}")
-
-
-# Only execute if running this file directly
-if __name__ == "__main__":
-    content = generate_post()
-    post_to_linkedin(content)
