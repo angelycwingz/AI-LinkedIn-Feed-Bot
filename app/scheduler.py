@@ -10,6 +10,6 @@ def job():
 
 def start_scheduler():
     scheduler = BlockingScheduler()
-    scheduler.add_job(func=job, trigger='cron', hour=20, minute=38) # Runs daily at 11:00 AM
+    scheduler.add_job(func=job, trigger='cron', hour=11, minute=00) # Runs daily at 11:00 AM
     print("Scheduler started... waiting for 11 AM.")
     scheduler.start()
