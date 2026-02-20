@@ -1,6 +1,7 @@
 import random
+import os
 import requests
-from config.settings import PERPLEXITY_API_KEY
+from config.settings import PERPLEXITY_API_KEY, GROQ_KEY
 
 # # Load env vars
 # load_dotenv()
@@ -16,30 +17,61 @@ topics = [
     "AI technology for developers",
 ]
 
-def generate_post():
-    topic = random.choice(topics)
-    prompt = f"""Write a short, creative LinkedIn post on {topic}.
-                keep it under 130 words.
-                Add 3-5 relevant trending hashtags.
-                Title should be 'AI thought of the day!'.
-            """
+# def generate_post():
+#     topic = random.choice(topics)
+#     prompt = f"""Write a short, creative LinkedIn post on {topic}.
+#                 keep it under 130 words.
+#                 Add 3-5 relevant trending hashtags.
+#                 Title should be 'AI thought of the day!'.
+#             """
     
-    # Set up the API endpoint and headers
-    url = "https://api.perplexity.ai/chat/completions"
+#     # Set up the API endpoint and headers
+#     url = "https://api.perplexity.ai/chat/completions"
+#     headers = {
+#         "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
+#         "Content-Type": "application/json"
+#     }
+
+#     # Define the request payload
+#     payload = {
+#         "model": "sonar-pro",
+#         "messages": [
+#             {"role": "user", "content":prompt}
+#         ]
+#     }
+
+#     # Make the API call
+#     response = requests.post(url, headers=headers, json=payload)
+
+#     return response.json()["choices"][0]['message']['content'].strip()
+
+
+
+def generate_post():
+
+    topic = random.choice(topics)
+
+    prompt = f"""Write a short, creative LinkedIn post on {topic}.
+#                 keep it under 130 words.
+#                 Add 3-5 relevant trending hashtags.
+#                 Title should be 'AI thought of the day!'.
+#             """
+    
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    
     headers = {
-        "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
+        "Authorization": f"Bearer {GROQ_KEY}",
         "Content-Type": "application/json"
     }
 
-    # Define the request payload
-    payload = {
-        "model": "sonar-pro",
+    data = {
+        "model": "llama-3.3-70b-versatile",
         "messages": [
-            {"role": "user", "content":prompt}
+            {"role": "user",
+             "content": prompt}
         ]
     }
 
-    # Make the API call
-    response = requests.post(url, headers=headers, json=payload)
-
-    return response.json()["choices"][0]['message']['content'].strip()
+    response = requests.post(url, headers=headers, json=data)
+    
+    return response.json()["choices"][0]["message"]["content"]

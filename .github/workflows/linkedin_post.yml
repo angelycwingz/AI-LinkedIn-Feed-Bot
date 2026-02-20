@@ -24,6 +24,7 @@ jobs:
       - name: Run LinkedIn Post
         env:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          GROQ_KEY: ${{ secrets.GROQ_KEY }}
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_USER_URN: ${{ secrets.LINKEDIN_USER_URN }}
         run: PYTHONPATH=. python main.py
